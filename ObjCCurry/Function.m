@@ -9,6 +9,23 @@
 #import "Function.h"
 #import "MethodFunction.h"
 
+static id sharedNull = nil;
+
+@interface NullObject : NSObject
++ (instancetype)null;
+@end
+
+@implementation NullObject
++ (void)initialize {
+    sharedNull = [NullObject new];
+}
+
++ (instancetype)null {
+    return sharedNull;
+}
+@end
+
+
 
 @interface Function ()
 
@@ -23,7 +40,6 @@
     return [MethodFunction fromTarget:target selector:selector];
 }
 
-
 - (instancetype)initWithArgCount:(NSInteger)argCount args:(NSArray*)args {
     assert(argCount > 0);
     assert([args count] <= argCount);
@@ -36,14 +52,18 @@
     return self;
 }
 
++ (id)nullArg {
+    return [NullObject null];
+}
+
 - (id)copyWithZone:(NSZone*)zone {
     return [[[self class] alloc] initWithArgCount:_argCount args:_args];
 }
 
-- (id):(id)obj {
+- (id):(id)arg {
     assert([_args count] < _argCount);
-    assert(obj);
 
+    id obj = arg? arg: [Function nullArg];
     Function* f = [self copy];
     f.args = _args? [_args arrayByAddingObject:obj]: @[obj];
 

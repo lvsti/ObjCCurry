@@ -19,6 +19,8 @@
 - (instancetype)initWithArgCount:(NSInteger)argCount
                             args:(NSArray*)args;
 
++ (id)nullArg;
+
 - (id):(id)arg;
 - (id)invoke;
 

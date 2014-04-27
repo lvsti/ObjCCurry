@@ -48,7 +48,11 @@
     [self.args enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         const char* argType = [[_invocation methodSignature] getArgumentTypeAtIndex:idx + 2];
         
-        if (!strcmp(argType, @encode(id))) {
+        if (argType[0] == '@' || argType[0] == '^') {
+            // object or pointer type
+            if (obj == [Function nullArg]) {
+                obj = nil;
+            }
             [_invocation setArgument:&obj atIndex:idx + 2];
         } else {
             // it's not NSObject, assuming a wrapped NSValue of the same kind
