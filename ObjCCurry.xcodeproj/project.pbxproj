@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		E8194BB3190D79C70072EC6F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8194BB2190D79C70072EC6F /* Foundation.framework */; };
 		E8194BB6190D79C70072EC6F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8194BB5190D79C70072EC6F /* main.m */; };
+		E8194BC6190D7A190072EC6F /* BlockFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = E8194BC1190D7A190072EC6F /* BlockFunction.m */; };
 		E8194BC7190D7A190072EC6F /* Function.m in Sources */ = {isa = PBXBuildFile; fileRef = E8194BC3190D7A190072EC6F /* Function.m */; };
 		E8194BC8190D7A190072EC6F /* MethodFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = E8194BC5190D7A190072EC6F /* MethodFunction.m */; };
+		E8194BCF190D84C40072EC6F /* MABlockForwarding.m in Sources */ = {isa = PBXBuildFile; fileRef = E8194BCD190D84C40072EC6F /* MABlockForwarding.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,10 +32,14 @@
 		E8194BB2190D79C70072EC6F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E8194BB5190D79C70072EC6F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E8194BB8190D79C70072EC6F /* ObjCCurry-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ObjCCurry-Prefix.pch"; sourceTree = "<group>"; };
+		E8194BC0190D7A190072EC6F /* BlockFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockFunction.h; sourceTree = "<group>"; };
+		E8194BC1190D7A190072EC6F /* BlockFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockFunction.m; sourceTree = "<group>"; };
 		E8194BC2190D7A190072EC6F /* Function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Function.h; sourceTree = "<group>"; };
 		E8194BC3190D7A190072EC6F /* Function.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Function.m; sourceTree = "<group>"; };
 		E8194BC4190D7A190072EC6F /* MethodFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodFunction.h; sourceTree = "<group>"; };
 		E8194BC5190D7A190072EC6F /* MethodFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodFunction.m; sourceTree = "<group>"; };
+		E8194BCC190D84C40072EC6F /* MABlockForwarding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MABlockForwarding.h; sourceTree = "<group>"; };
+		E8194BCD190D84C40072EC6F /* MABlockForwarding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MABlockForwarding.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +57,7 @@
 		E8194BA6190D79C70072EC6F = {
 			isa = PBXGroup;
 			children = (
+				E8194BC9190D84C40072EC6F /* External */,
 				E8194BB4190D79C70072EC6F /* ObjCCurry */,
 				E8194BB1190D79C70072EC6F /* Frameworks */,
 				E8194BB0190D79C70072EC6F /* Products */,
@@ -76,6 +83,8 @@
 		E8194BB4190D79C70072EC6F /* ObjCCurry */ = {
 			isa = PBXGroup;
 			children = (
+				E8194BC0190D7A190072EC6F /* BlockFunction.h */,
+				E8194BC1190D7A190072EC6F /* BlockFunction.m */,
 				E8194BC2190D7A190072EC6F /* Function.h */,
 				E8194BC3190D7A190072EC6F /* Function.m */,
 				E8194BC4190D7A190072EC6F /* MethodFunction.h */,
@@ -92,6 +101,23 @@
 				E8194BB8190D79C70072EC6F /* ObjCCurry-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E8194BC9190D84C40072EC6F /* External */ = {
+			isa = PBXGroup;
+			children = (
+				E8194BCA190D84C40072EC6F /* MABlockForwarding */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
+		E8194BCA190D84C40072EC6F /* MABlockForwarding */ = {
+			isa = PBXGroup;
+			children = (
+				E8194BCC190D84C40072EC6F /* MABlockForwarding.h */,
+				E8194BCD190D84C40072EC6F /* MABlockForwarding.m */,
+			);
+			path = MABlockForwarding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,7 +173,9 @@
 			files = (
 				E8194BC7190D7A190072EC6F /* Function.m in Sources */,
 				E8194BB6190D79C70072EC6F /* main.m in Sources */,
+				E8194BCF190D84C40072EC6F /* MABlockForwarding.m in Sources */,
 				E8194BC8190D7A190072EC6F /* MethodFunction.m in Sources */,
+				E8194BC6190D7A190072EC6F /* BlockFunction.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

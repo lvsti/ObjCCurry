@@ -15,6 +15,7 @@
 @property (nonatomic, copy, readonly) NSArray* args;
 
 + (instancetype)fromTarget:(id)target selector:(SEL)selector;
++ (instancetype)fromBlock:(id)block;
 
 - (instancetype)initWithArgCount:(NSInteger)argCount
                             args:(NSArray*)args;

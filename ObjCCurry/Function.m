@@ -7,7 +7,9 @@
 //
 
 #import "Function.h"
+#import "BlockFunction.h"
 #import "MethodFunction.h"
+
 
 static id sharedNull = nil;
 
@@ -38,6 +40,10 @@ static id sharedNull = nil;
 
 + (instancetype)fromTarget:(id)target selector:(SEL)selector {
     return [MethodFunction fromTarget:target selector:selector];
+}
+
++ (instancetype)fromBlock:(id)block {
+    return [BlockFunction fromBlock:block];
 }
 
 - (instancetype)initWithArgCount:(NSInteger)argCount args:(NSArray*)args {
