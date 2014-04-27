@@ -57,9 +57,10 @@
                 
                 NSUInteger size = 0;
                 NSGetSizeAndAlignment(argType, &size, NULL);
-                void* buf = alloca(size);
+                void* buf = malloc(size);
                 [(NSValue*)obj getValue:buf];
                 [inv setArgument:buf atIndex:idx + 1];
+                free(buf);
             }
         }];
         
@@ -68,13 +69,18 @@
         const char* retType = [ms methodReturnType];
         
         if (retType[0] != 'v') {
-            void* buf = alloca([ms methodReturnLength]);
-            [inv getReturnValue:buf];
-            
-            if (retType[0] == '@' || retType[0] == '^') {
-                memcpy((void*)&retval, buf, sizeof(id));
+            if (retType[0] == '@') {
+                CFTypeRef ref;
+                [inv getReturnValue:&ref];
+                if (ref) {
+                    CFRetain(ref);
+                }
+                retval = (__bridge_transfer id)ref;
             } else {
+                void* buf = malloc([ms methodReturnLength]);
+                [inv getReturnValue:buf];
                 retval = [NSValue valueWithBytes:buf objCType:retType];
+                free(buf);
             }
         }
     };

@@ -25,11 +25,9 @@
     assert(argCount > 0);
     
     MethodFunction* f = [[MethodFunction alloc] initWithArgCount:argCount args:nil];
-    if (f) {
-        f.invocation = [NSInvocation invocationWithMethodSignature:[target methodSignatureForSelector:selector]];
-        [f.invocation setTarget:target];
-        [f.invocation setSelector:selector];
-    }
+    f.invocation = [NSInvocation invocationWithMethodSignature:[target methodSignatureForSelector:selector]];
+    [f.invocation setTarget:target];
+    [f.invocation setSelector:selector];
     
     return f;
 }
@@ -62,9 +60,10 @@
             
             NSUInteger size = 0;
             NSGetSizeAndAlignment(argType, &size, NULL);
-            void* buf = alloca(size);
+            void* buf = malloc(size);
             [(NSValue*)obj getValue:buf];
             [_invocation setArgument:buf atIndex:idx + 2];
+            free(buf);
         }
     }];
 
@@ -74,13 +73,18 @@
     const char* retType = [ms methodReturnType];
 
     if (retType[0] != 'v') {
-        void* buf = alloca([[_invocation methodSignature] methodReturnLength]);
-        [_invocation getReturnValue:buf];
-
-        if (retType[0] == '@' || retType[0] == '^') {
-            memcpy((void*)&retval, buf, sizeof(id));
+        if (retType[0] == '@') {
+            CFTypeRef ref;
+            [_invocation getReturnValue:&ref];
+            if (ref) {
+                CFRetain(ref);
+            }
+            retval = (__bridge_transfer id)ref;
         } else {
-            retval = [NSValue valueWithBytes:buf objCType:[[_invocation methodSignature] methodReturnType]];
+            void* buf = malloc([ms methodReturnLength]);
+            [_invocation getReturnValue:buf];
+            retval = [NSValue valueWithBytes:buf objCType:retType];
+            free(buf);
         }
     }
     
