@@ -44,9 +44,10 @@
 
 - (id)invoke {
     assert([self.args count] == self.argCount);
+    NSMethodSignature* ms = [_invocation methodSignature];
     
     [self.args enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        const char* argType = [[_invocation methodSignature] getArgumentTypeAtIndex:idx + 2];
+        const char* argType = [ms getArgumentTypeAtIndex:idx + 2];
         
         if (argType[0] == '@' || argType[0] == '^') {
             // object or pointer type
@@ -59,7 +60,9 @@
             assert([obj isKindOfClass:[NSValue class]]);
             assert(!strcmp([obj objCType], argType));
             
-            unsigned char buf[16];
+            NSUInteger size = 0;
+            NSGetSizeAndAlignment(argType, &size, NULL);
+            void* buf = alloca(size);
             [(NSValue*)obj getValue:buf];
             [_invocation setArgument:buf atIndex:idx + 2];
         }
@@ -68,17 +71,19 @@
     [_invocation invoke];
 
     id retval = nil;
-    void* buf = malloc([[_invocation methodSignature] methodReturnLength]);
-    [_invocation getReturnValue:buf];
+    const char* retType = [ms methodReturnType];
 
-    if (!strcmp([[_invocation methodSignature] methodReturnType], @encode(id))) {
-        memcpy((void*)&retval, buf, sizeof(id));
-    } else {
-        retval = [NSValue valueWithBytes:buf objCType:[[_invocation methodSignature] methodReturnType]];
+    if (retType[0] != 'v') {
+        void* buf = alloca([[_invocation methodSignature] methodReturnLength]);
+        [_invocation getReturnValue:buf];
+
+        if (retType[0] == '@' || retType[0] == '^') {
+            memcpy((void*)&retval, buf, sizeof(id));
+        } else {
+            retval = [NSValue valueWithBytes:buf objCType:[[_invocation methodSignature] methodReturnType]];
+        }
     }
     
-    free(buf);
-
     return retval;
 }
 

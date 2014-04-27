@@ -48,7 +48,7 @@
         [self.args enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             const char* argType = [ms getArgumentTypeAtIndex:idx + 1];
             
-            if (!strcmp(argType, @encode(id))) {
+            if (argType[0] == '@' || argType[0] == '^') {
                 [inv setArgument:&obj atIndex:idx + 1];
             } else {
                 // it's not NSObject, assuming an NSValue of the same kind
@@ -57,25 +57,26 @@
                 
                 NSUInteger size = 0;
                 NSGetSizeAndAlignment(argType, &size, NULL);
-                void* buf = malloc(size);
+                void* buf = alloca(size);
                 [(NSValue*)obj getValue:buf];
                 [inv setArgument:buf atIndex:idx + 1];
-                free(buf);
             }
         }];
         
         call();
         
-        void* buf = malloc([ms methodReturnLength]);
-        [inv getReturnValue:buf];
+        const char* retType = [ms methodReturnType];
         
-        if (!strcmp([ms methodReturnType], @encode(id))) {
-            memcpy((void*)&retval, buf, sizeof(id));
-        } else {
-            retval = [NSValue valueWithBytes:buf objCType:[ms methodReturnType]];
+        if (retType[0] != 'v') {
+            void* buf = alloca([ms methodReturnLength]);
+            [inv getReturnValue:buf];
+            
+            if (retType[0] == '@' || retType[0] == '^') {
+                memcpy((void*)&retval, buf, sizeof(id));
+            } else {
+                retval = [NSValue valueWithBytes:buf objCType:retType];
+            }
         }
-        
-        free(buf);
     };
     
     id (^wrapper)() = MAForwardingBlock(invWrapper, _block);
