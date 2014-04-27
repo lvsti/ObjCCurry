@@ -1,0 +1,3 @@
+[submodule "External/MABlockForwarding"]
+	path = External/MABlockForwarding
+	url = git@github.com:lkxf/MABlockForwarding.git
