@@ -13,6 +13,8 @@
 		E8194BC7190D7A190072EC6F /* Function.m in Sources */ = {isa = PBXBuildFile; fileRef = E8194BC3190D7A190072EC6F /* Function.m */; };
 		E8194BC8190D7A190072EC6F /* MethodFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = E8194BC5190D7A190072EC6F /* MethodFunction.m */; };
 		E8194BCF190D84C40072EC6F /* MABlockForwarding.m in Sources */ = {isa = PBXBuildFile; fileRef = E8194BCD190D84C40072EC6F /* MABlockForwarding.m */; };
+		E86B6548190F0A4300F7916E /* NSInvocation+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E86B6547190F0A4300F7916E /* NSInvocation+Extensions.m */; };
+		E86B654B190F0DB000F7916E /* NSInvocation+Function.m in Sources */ = {isa = PBXBuildFile; fileRef = E86B654A190F0DB000F7916E /* NSInvocation+Function.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +42,10 @@
 		E8194BC5190D7A190072EC6F /* MethodFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodFunction.m; sourceTree = "<group>"; };
 		E8194BCC190D84C40072EC6F /* MABlockForwarding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MABlockForwarding.h; sourceTree = "<group>"; };
 		E8194BCD190D84C40072EC6F /* MABlockForwarding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MABlockForwarding.m; sourceTree = "<group>"; };
+		E86B6546190F0A4300F7916E /* NSInvocation+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+Extensions.h"; sourceTree = "<group>"; };
+		E86B6547190F0A4300F7916E /* NSInvocation+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+Extensions.m"; sourceTree = "<group>"; };
+		E86B6549190F0DB000F7916E /* NSInvocation+Function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+Function.h"; sourceTree = "<group>"; };
+		E86B654A190F0DB000F7916E /* NSInvocation+Function.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+Function.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +97,10 @@
 				E8194BC5190D7A190072EC6F /* MethodFunction.m */,
 				E8194BB5190D79C70072EC6F /* main.m */,
 				E8194BB7190D79C70072EC6F /* Supporting Files */,
+				E86B6546190F0A4300F7916E /* NSInvocation+Extensions.h */,
+				E86B6547190F0A4300F7916E /* NSInvocation+Extensions.m */,
+				E86B6549190F0DB000F7916E /* NSInvocation+Function.h */,
+				E86B654A190F0DB000F7916E /* NSInvocation+Function.m */,
 			);
 			path = ObjCCurry;
 			sourceTree = "<group>";
@@ -176,6 +186,8 @@
 				E8194BCF190D84C40072EC6F /* MABlockForwarding.m in Sources */,
 				E8194BC8190D7A190072EC6F /* MethodFunction.m in Sources */,
 				E8194BC6190D7A190072EC6F /* BlockFunction.m in Sources */,
+				E86B654B190F0DB000F7916E /* NSInvocation+Function.m in Sources */,
+				E86B6548190F0A4300F7916E /* NSInvocation+Extensions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
