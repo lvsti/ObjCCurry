@@ -16,6 +16,7 @@
 
 + (instancetype)fromTarget:(id)target selector:(SEL)selector;
 + (instancetype)fromBlock:(id)block;
++ (instancetype)fromPointer:(void*)ptr objCTypes:(const char*)types;
 
 - (instancetype)initWithArgCount:(NSInteger)argCount
                             args:(NSArray*)args;

@@ -9,6 +9,7 @@
 #import "Function.h"
 #import "BlockFunction.h"
 #import "MethodFunction.h"
+#import "PointerFunction.h"
 
 
 static id sharedNull = nil;
@@ -44,6 +45,10 @@ static id sharedNull = nil;
 
 + (instancetype)fromBlock:(id)block {
     return [BlockFunction fromBlock:block];
+}
+
++ (instancetype)fromPointer:(void*)ptr objCTypes:(const char*)types {
+    return [PointerFunction fromPointer:ptr objCTypes:types];
 }
 
 - (instancetype)initWithArgCount:(NSInteger)argCount args:(NSArray*)args {

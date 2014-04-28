@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "Function.h"
-#import "PointerFunction.h"
 
 @interface Probe : NSObject
 
@@ -89,7 +88,7 @@ int main(int argc, const char * argv[])
         
         MyClass* m = [MyClass new];
         const char* sig = [[NSString stringWithFormat:@"%s%s%s", @encode(int), @encode(id), @encode(CGRect)] UTF8String];
-        id h = [PointerFunction fromPointer:stuff objCTypes:sig];
+        id h = [Function fromPointer:stuff objCTypes:sig];
         h = [h :[NSNull null]];
         id ret = [h :[NSValue valueWithRect:CGRectMake(1, 2, 3, 4)]];
         NSLog(@"%@", ret);
