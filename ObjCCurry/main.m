@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Function.h"
-
+#import "PointerFunction.h"
 
 @interface Probe : NSObject
 
@@ -77,12 +77,22 @@
 
 @end
 
+int stuff(id blah, CGRect r) {
+    NSLog(@"woohoo %@ %@", blah, NSStringFromRect(r));
+    return 42;
+}
+
 
 int main(int argc, const char * argv[])
 {
     @autoreleasepool {
         
         MyClass* m = [MyClass new];
+        const char* sig = [[NSString stringWithFormat:@"%s%s%s", @encode(int), @encode(id), @encode(CGRect)] UTF8String];
+        id h = [PointerFunction fromPointer:stuff objCTypes:sig];
+        h = [h :[NSNull null]];
+        id ret = [h :[NSValue valueWithRect:CGRectMake(1, 2, 3, 4)]];
+        NSLog(@"%@", ret);
         
         NSArray* values = @[@42, @11, @-96, @1024];
         id f = [Function fromTarget:m selector:@selector(doThisWith:andWith:error:block:delta:)];
