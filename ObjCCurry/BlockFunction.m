@@ -8,6 +8,8 @@
 
 #import "BlockFunction.h"
 #import "MABlockForwarding.h"
+#import "NSInvocation+Extensions.h"
+#import "NSInvocation+Function.h"
 
 
 @interface BlockFunction ()
@@ -45,44 +47,14 @@
     __block id retval = nil;
     
     BlockInterposer invWrapper = ^(NSInvocation *inv, void (^call)()) {
-        [self.args enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            const char* argType = [ms getArgumentTypeAtIndex:idx + 1];
-            
-            if (argType[0] == '@' || argType[0] == '^') {
-                [inv setArgument:&obj atIndex:idx + 1];
-            } else {
-                // it's not NSObject, assuming an NSValue of the same kind
-                assert([obj isKindOfClass:[NSValue class]]);
-                assert(!strcmp([obj objCType], argType));
-                
-                NSUInteger size = 0;
-                NSGetSizeAndAlignment(argType, &size, NULL);
-                void* buf = malloc(size);
-                [(NSValue*)obj getValue:buf];
-                [inv setArgument:buf atIndex:idx + 1];
-                free(buf);
-            }
-        }];
+        [inv setArgumentsWithArray:self.args
+                   startingAtIndex:1
+                    usingSignature:ms];
         
         call();
         
         const char* retType = [ms methodReturnType];
-        
-        if (retType[0] != 'v') {
-            if (retType[0] == '@') {
-                CFTypeRef ref;
-                [inv getReturnValue:&ref];
-                if (ref) {
-                    CFRetain(ref);
-                }
-                retval = (__bridge_transfer id)ref;
-            } else {
-                void* buf = malloc([ms methodReturnLength]);
-                [inv getReturnValue:buf];
-                retval = [NSValue valueWithBytes:buf objCType:retType];
-                free(buf);
-            }
-        }
+        retval = [inv returnedObjectWithObjCType:retType];
     };
     
     id (^wrapper)() = MAForwardingBlock(invWrapper, _block);
