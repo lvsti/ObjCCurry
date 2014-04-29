@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "Function.h"
+#import "PointerFunction.h"
+
 
 @interface Probe : NSObject
 
@@ -87,8 +89,7 @@ int main(int argc, const char * argv[])
     @autoreleasepool {
         
         MyClass* m = [MyClass new];
-        const char* sig = [[NSString stringWithFormat:@"%s%s%s", @encode(int), @encode(id), @encode(CGRect)] UTF8String];
-        id h = [Function fromPointer:stuff objCTypes:sig];
+        id h = [Function fromPointer:stuff objCTypes:FPTR_SIG(int, id, CGRect)];
         h = [h :[NSNull null]];
         id ret = [h :[NSValue valueWithRect:CGRectMake(1, 2, 3, 4)]];
         NSLog(@"%@", ret);
