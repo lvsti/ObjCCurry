@@ -34,6 +34,8 @@ static id sharedNull = nil;
 
 @property (nonatomic, copy, readwrite) NSArray* args;
 
+- (id)apply:(NSArray*)newArgs;
+
 @end
 
 
@@ -72,12 +74,37 @@ static id sharedNull = nil;
 }
 
 - (id):(id)arg {
-    assert([_args count] < _argCount);
+    NSArray* newArgs = @[arg? arg: [Function nullArg]];
+    return [self apply:newArgs];
+}
 
-    id obj = arg? arg: [Function nullArg];
+- (id):(id)arg1 :(id)arg2 {
+    NSArray* newArgs = @[arg1? arg1: [Function nullArg],
+                         arg2? arg2: [Function nullArg]];
+    return [self apply:newArgs];
+}
+
+- (id):(id)arg1 :(id)arg2 :(id)arg3 {
+    NSArray* newArgs = @[arg1? arg1: [Function nullArg],
+                         arg2? arg2: [Function nullArg],
+                         arg3? arg3: [Function nullArg]];
+    return [self apply:newArgs];
+}
+
+- (id):(id)arg1 :(id)arg2 :(id)arg3 :(id)arg4 {
+    NSArray* newArgs = @[arg1? arg1: [Function nullArg],
+                         arg2? arg2: [Function nullArg],
+                         arg3? arg3: [Function nullArg],
+                         arg4? arg4: [Function nullArg]];
+    return [self apply:newArgs];
+}
+
+- (id)apply:(NSArray*)newArgs {
+    assert([_args count] + [newArgs count] <= _argCount);
+    
     Function* f = [self copy];
-    f.args = _args? [_args arrayByAddingObject:obj]: @[obj];
-
+    f.args = _args? [_args arrayByAddingObjectsFromArray:newArgs]: newArgs;
+    
     if ([f.args count] == _argCount) {
         return [f invoke];
     }

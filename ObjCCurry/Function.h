@@ -24,6 +24,10 @@
 + (id)nullArg;
 
 - (id):(id)arg;
+- (id):(id)arg1 :(id)arg2;
+- (id):(id)arg1 :(id)arg2 :(id)arg3;
+- (id):(id)arg1 :(id)arg2 :(id)arg3 :(id)arg4;
+
 - (id)invoke;
 
 @end
