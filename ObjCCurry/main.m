@@ -84,6 +84,117 @@ int stuff(id blah, CGRect r) {
 }
 
 
+void CallableEntitiesDemo() {
+    
+    // C-style function
+    Function* rangeFactory = [Function fromPointer:NSMakeRange objCTypes:FPTR_SIG(NSRange, NSUInteger, NSUInteger)];
+    Function* rangeFrom42 = [rangeFactory :@42];
+    // ...
+    NSRange r = [[rangeFrom42 :@8] rangeValue];
+    NSLog(@"%@", NSStringFromRange(r));
+    
+    
+    // ObjC method
+    Function* dateFactory = [Function fromTarget:[NSDate class] selector:@selector(dateWithTimeInterval:sinceDate:)];
+    Function* adjustDateForSpain = [dateFactory :@(-60*30)];
+    // ...
+    NSDate* meetupTime = [NSDate dateWithString:@"2014-11-11 12:00:00 +0000"];
+    NSDate* advertisedTimeForSpaniards = [adjustDateForSpain :meetupTime];
+    NSLog(@"meet at: %@ (in Spain, advertise as %@)", meetupTime, advertisedTimeForSpaniards);
+    
+
+    // block
+    int (^sum3)(int, int, int) = ^int(int x, int y, int z) { return x+y+z; };
+    Function* sum3func = [Function fromBlock:sum3];
+    Function* sum1ToXY = [sum3func :@1];
+    NSLog(@"sum of 1, 2, and 3: %@", [sum1ToXY :@2 :@3]);
+    
+}
+
+
+void Benchmark() {
+    NSDate* start = nil;
+    NSDate* end = nil;
+    
+    // C-style function
+    Function* rangeFactory = [Function fromPointer:NSMakeRange objCTypes:FPTR_SIG(NSRange, NSUInteger, NSUInteger)];
+    Function* rangeFrom42 = [rangeFactory :@42];
+    NSRange r;
+    
+    start = [NSDate date];
+    for (NSUInteger i = 0; i < 1000000; ++i) {
+        @autoreleasepool {
+            r = [[rangeFrom42 :@8] rangeValue];
+        }
+    }
+    end = [NSDate date];
+    
+    NSLog(@"fptr - function object: %f", [end timeIntervalSinceDate:start]);
+    
+    start = [NSDate date];
+    for (NSUInteger i = 0; i < 1000000; ++i) {
+        r = NSMakeRange(42, 8);
+    }
+    end = [NSDate date];
+    
+    NSLog(@"fptr - plain: %f", [end timeIntervalSinceDate:start]);
+    
+    
+    // ObjC method
+    Function* dateFactory = [Function fromTarget:[NSDate class] selector:@selector(dateWithTimeInterval:sinceDate:)];
+    Function* adjustDateForSpain = [dateFactory :@(-60*30)];
+    NSDate* meetupTime = [NSDate dateWithString:@"2014-11-11 12:00:00 +0000"];
+    NSDate* d = nil;
+
+    start = [NSDate date];
+    for (NSUInteger i = 0; i < 1000000; ++i) {
+        @autoreleasepool {
+            d = [adjustDateForSpain :meetupTime];
+        }
+    }
+    end = [NSDate date];
+    
+    NSLog(@"selector - function object: %f", [end timeIntervalSinceDate:start]);
+    
+    start = [NSDate date];
+    for (NSUInteger i = 0; i < 1000000; ++i) {
+        @autoreleasepool {
+            d = [NSDate dateWithTimeInterval:-60*30 sinceDate:meetupTime];
+        }
+    }
+    end = [NSDate date];
+    
+    NSLog(@"selector - plain: %f", [end timeIntervalSinceDate:start]);
+    
+    
+    // block
+    int (^sum3)(int, int, int) = ^int(int x, int y, int z) { return x+y+z; };
+    Function* sum3func = [Function fromBlock:sum3];
+    Function* sum1ToXY = [sum3func :@1];
+    int sum = 0;
+
+    start = [NSDate date];
+    for (NSUInteger i = 0; i < 1000000; ++i) {
+        @autoreleasepool {
+            sum = [[sum1ToXY :@2 :@3] intValue];
+        }
+    }
+    end = [NSDate date];
+    
+    NSLog(@"block - function object: %f", [end timeIntervalSinceDate:start]);
+    
+    start = [NSDate date];
+    for (NSUInteger i = 0; i < 1000000; ++i) {
+        sum = sum3(1, 2, 3);
+    }
+    end = [NSDate date];
+    
+    NSLog(@"block - plain: %f", [end timeIntervalSinceDate:start]);
+    
+}
+
+
+
 int main(int argc, const char * argv[])
 {
     @autoreleasepool {
