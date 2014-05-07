@@ -11,6 +11,8 @@
 #import "MethodFunction.h"
 #import "PointerFunction.h"
 
+#define NULLABLE(arg)   ((arg)? (arg): [Function nullArg])
+
 
 static id sharedNull = nil;
 
@@ -74,28 +76,70 @@ static id sharedNull = nil;
 }
 
 - (id):(id)arg {
-    NSArray* newArgs = @[arg? arg: [Function nullArg]];
+    NSArray* newArgs = @[NULLABLE(arg)];
     return [self apply:newArgs];
 }
 
 - (id):(id)arg1 :(id)arg2 {
-    NSArray* newArgs = @[arg1? arg1: [Function nullArg],
-                         arg2? arg2: [Function nullArg]];
+    NSArray* newArgs = @[NULLABLE(arg1),
+                         NULLABLE(arg2)];
     return [self apply:newArgs];
 }
 
 - (id):(id)arg1 :(id)arg2 :(id)arg3 {
-    NSArray* newArgs = @[arg1? arg1: [Function nullArg],
-                         arg2? arg2: [Function nullArg],
-                         arg3? arg3: [Function nullArg]];
+    NSArray* newArgs = @[NULLABLE(arg1),
+                         NULLABLE(arg2),
+                         NULLABLE(arg3)];
     return [self apply:newArgs];
 }
 
 - (id):(id)arg1 :(id)arg2 :(id)arg3 :(id)arg4 {
-    NSArray* newArgs = @[arg1? arg1: [Function nullArg],
-                         arg2? arg2: [Function nullArg],
-                         arg3? arg3: [Function nullArg],
-                         arg4? arg4: [Function nullArg]];
+    NSArray* newArgs = @[NULLABLE(arg1),
+                         NULLABLE(arg2),
+                         NULLABLE(arg3),
+                         NULLABLE(arg4)];
+    return [self apply:newArgs];
+}
+
+- (id):(id)arg1 :(id)arg2 :(id)arg3 :(id)arg4 :(id)arg5 {
+    NSArray* newArgs = @[NULLABLE(arg1),
+                         NULLABLE(arg2),
+                         NULLABLE(arg3),
+                         NULLABLE(arg4),
+                         NULLABLE(arg5)];
+    return [self apply:newArgs];
+}
+
+- (id):(id)arg1 :(id)arg2 :(id)arg3 :(id)arg4 :(id)arg5 :(id)arg6 {
+    NSArray* newArgs = @[NULLABLE(arg1),
+                         NULLABLE(arg2),
+                         NULLABLE(arg3),
+                         NULLABLE(arg4),
+                         NULLABLE(arg5),
+                         NULLABLE(arg6)];
+    return [self apply:newArgs];
+}
+
+- (id):(id)arg1 :(id)arg2 :(id)arg3 :(id)arg4 :(id)arg5 :(id)arg6 :(id)arg7 {
+    NSArray* newArgs = @[NULLABLE(arg1),
+                         NULLABLE(arg2),
+                         NULLABLE(arg3),
+                         NULLABLE(arg4),
+                         NULLABLE(arg5),
+                         NULLABLE(arg6),
+                         NULLABLE(arg7)];
+    return [self apply:newArgs];
+}
+
+- (id):(id)arg1 :(id)arg2 :(id)arg3 :(id)arg4 :(id)arg5 :(id)arg6 :(id)arg7 :(id)arg8 {
+    NSArray* newArgs = @[NULLABLE(arg1),
+                         NULLABLE(arg2),
+                         NULLABLE(arg3),
+                         NULLABLE(arg4),
+                         NULLABLE(arg5),
+                         NULLABLE(arg6),
+                         NULLABLE(arg7),
+                         NULLABLE(arg8)];
     return [self apply:newArgs];
 }
 
