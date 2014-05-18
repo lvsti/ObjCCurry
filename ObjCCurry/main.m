@@ -194,6 +194,86 @@ void Benchmark() {
 }
 
 
+void FastLaneBenchmark() {
+    NSDate* start = nil;
+    NSDate* end = nil;
+
+    // C-style function
+    Function* strFromMT = [Function fromPointer:NSStringFromMapTable objCTypes:FPTR_SIG(NSString*, NSMapTable*)];
+    NSMapTable* mt = [NSMapTable weakToWeakObjectsMapTable];
+    id result = nil;
+
+    start = [NSDate date];
+    for (NSUInteger i = 0; i < 1000000; ++i) {
+        @autoreleasepool {
+            result = [strFromMT :mt];
+        }
+    }
+    end = [NSDate date];
+    
+    NSLog(@"fptr - function object: %f", [end timeIntervalSinceDate:start]);
+    
+    start = [NSDate date];
+    for (NSUInteger i = 0; i < 1000000; ++i) {
+        result = NSStringFromMapTable(mt);
+    }
+    end = [NSDate date];
+    
+    NSLog(@"fptr - plain: %f", [end timeIntervalSinceDate:start]);
+
+    
+    // ObjC method
+    Function* tzFactory = [Function fromTarget:[NSTimeZone class] selector:@selector(timeZoneWithName:data:)];
+    Function* namedTz = [tzFactory :@"custom timezone"];
+    
+    start = [NSDate date];
+    for (NSUInteger i = 0; i < 1000000; ++i) {
+        @autoreleasepool {
+            result = [NSTimeZone timeZoneWithName:@"custom timezone" data:nil];
+        }
+    }
+    end = [NSDate date];
+    NSLog(@"selector - plain: %f", [end timeIntervalSinceDate:start]);
+
+    
+    start = [NSDate date];
+    for (NSUInteger i = 0; i < 1000000; ++i) {
+        @autoreleasepool {
+            result = [namedTz :nil];
+        }
+    }
+    end = [NSDate date];
+
+    NSLog(@"selector - function object: %f", [end timeIntervalSinceDate:start]);
+ 
+    
+    // block
+    id (^sum3)(id, id, id) = ^id(id x, id y, id z) { return @([x intValue]+[y intValue]+[z intValue]); };
+    Function* sum3func = [Function fromBlock:sum3];
+    Function* sum1ToXY = [sum3func :@1];
+    int sum = 0;
+    
+    start = [NSDate date];
+    for (NSUInteger i = 0; i < 1000000; ++i) {
+        @autoreleasepool {
+            sum = [[sum1ToXY :@2 :@3] intValue];
+        }
+    }
+    end = [NSDate date];
+    
+    NSLog(@"block - function object: %f", [end timeIntervalSinceDate:start]);
+    
+    start = [NSDate date];
+    for (NSUInteger i = 0; i < 1000000; ++i) {
+        sum = [sum3(@1, @2, @3) intValue];
+    }
+    end = [NSDate date];
+    
+    NSLog(@"block - plain: %f", [end timeIntervalSinceDate:start]);
+    
+
+}
+
 
 int main(int argc, const char * argv[])
 {
