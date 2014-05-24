@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "Function.h"
-#import "PointerFunction.h"
+#import "FCFTest.h"
+
+#undef FN_NAMESPACE
+#define FN_NAMESPACE Foo
+#import "Scoped2.h"
 
 
 @interface Probe : NSObject
@@ -58,7 +62,28 @@
 @end
 
 
-@implementation NSArray (HOF)
+@protocol Functor <NSObject>
+- (id<Functor>)fmap:(Function*)func;
+
++ (Function*)fmap;
+@end
+
+
+@protocol Applicative <NSObject>
+- (id<Applicative>)ap:(id)value;
+
+@end
+
+@interface NSArray (Functor) <Functor>
+@end
+
+@implementation NSArray (Functor)
+
++ (Function*)fmap {
+    return [Function fromBlock:^id<Functor>(Function* func, NSArray* ftor) {
+        return [ftor fmap:func];
+    }];
+}
 
 - (NSArray*)fmap:(Function*)func {
     NSMutableArray* result = [NSMutableArray arrayWithCapacity:[self count]];
@@ -279,12 +304,16 @@ int main(int argc, const char * argv[])
 {
     @autoreleasepool {
         
+        id result = [[NSArray fmap] :[[Flip :Foo_Cons] :@[@42]] :@[@1,@2,@3,@4]];
+        
+
+        
         MyClass* m = [MyClass new];
         id h = [Function fromPointer:stuff objCTypes:FPTR_SIG(int, id, CGRect)];
         h = [h :[NSNull null]];
         id ret = [h :[NSValue valueWithRect:CGRectMake(1, 2, 3, 4)]];
         NSLog(@"%@", ret);
-        
+
         NSArray* values = @[@42, @11, @-96, @1024];
         id f = [Function fromTarget:m selector:@selector(doThisWith:andWith:error:block:delta:)];
         f = [[[f :@111] :[NSValue valueWithRect:CGRectMake(666, 1, 2, 3)]] :nil];

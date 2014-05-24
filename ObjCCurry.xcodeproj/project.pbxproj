@@ -13,6 +13,9 @@
 		E8194BC7190D7A190072EC6F /* Function.m in Sources */ = {isa = PBXBuildFile; fileRef = E8194BC3190D7A190072EC6F /* Function.m */; };
 		E8194BC8190D7A190072EC6F /* MethodFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = E8194BC5190D7A190072EC6F /* MethodFunction.m */; };
 		E8194BCF190D84C40072EC6F /* MABlockForwarding.m in Sources */ = {isa = PBXBuildFile; fileRef = E8194BCD190D84C40072EC6F /* MABlockForwarding.m */; };
+		E83191B4192FCB040048E4BB /* FCFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E83191B3192FCB040048E4BB /* FCFTest.m */; };
+		E83191B7192FD5C80048E4BB /* Scoped1.m in Sources */ = {isa = PBXBuildFile; fileRef = E83191B6192FD5C80048E4BB /* Scoped1.m */; };
+		E83191BA192FD5DA0048E4BB /* Scoped2.m in Sources */ = {isa = PBXBuildFile; fileRef = E83191B9192FD5DA0048E4BB /* Scoped2.m */; };
 		E851A3AC19199CD40076A5F1 /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = E851A3AB19199CD40076A5F1 /* EXTScope.m */; };
 		E86B6545190EF96700F7916E /* PointerFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = E86B6544190EF96700F7916E /* PointerFunction.m */; };
 		E86B6548190F0A4300F7916E /* NSInvocation+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E86B6547190F0A4300F7916E /* NSInvocation+Extensions.m */; };
@@ -45,6 +48,12 @@
 		E8194BCC190D84C40072EC6F /* MABlockForwarding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MABlockForwarding.h; sourceTree = "<group>"; };
 		E8194BCD190D84C40072EC6F /* MABlockForwarding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MABlockForwarding.m; sourceTree = "<group>"; };
 		E83191AF192FCA920048E4BB /* FCF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCF.h; sourceTree = "<group>"; };
+		E83191B2192FCB040048E4BB /* FCFTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCFTest.h; sourceTree = "<group>"; };
+		E83191B3192FCB040048E4BB /* FCFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCFTest.m; sourceTree = "<group>"; };
+		E83191B5192FD5C80048E4BB /* Scoped1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scoped1.h; sourceTree = "<group>"; };
+		E83191B6192FD5C80048E4BB /* Scoped1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scoped1.m; sourceTree = "<group>"; };
+		E83191B8192FD5DA0048E4BB /* Scoped2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scoped2.h; sourceTree = "<group>"; };
+		E83191B9192FD5DA0048E4BB /* Scoped2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scoped2.m; sourceTree = "<group>"; };
 		E851A3AA19199CD40076A5F1 /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
 		E851A3AB19199CD40076A5F1 /* EXTScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTScope.m; sourceTree = "<group>"; };
 		E86B6543190EF96700F7916E /* PointerFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointerFunction.h; sourceTree = "<group>"; };
@@ -100,6 +109,8 @@
 				E8194BC0190D7A190072EC6F /* BlockFunction.h */,
 				E8194BC1190D7A190072EC6F /* BlockFunction.m */,
 				E83191AF192FCA920048E4BB /* FCF.h */,
+				E83191B2192FCB040048E4BB /* FCFTest.h */,
+				E83191B3192FCB040048E4BB /* FCFTest.m */,
 				E8194BC2190D7A190072EC6F /* Function.h */,
 				E8194BC3190D7A190072EC6F /* Function.m */,
 				E8194BC4190D7A190072EC6F /* MethodFunction.h */,
@@ -112,6 +123,10 @@
 				E86B6547190F0A4300F7916E /* NSInvocation+Extensions.m */,
 				E86B6549190F0DB000F7916E /* NSInvocation+Function.h */,
 				E86B654A190F0DB000F7916E /* NSInvocation+Function.m */,
+				E83191B5192FD5C80048E4BB /* Scoped1.h */,
+				E83191B6192FD5C80048E4BB /* Scoped1.m */,
+				E83191B8192FD5DA0048E4BB /* Scoped2.h */,
+				E83191B9192FD5DA0048E4BB /* Scoped2.m */,
 			);
 			path = ObjCCurry;
 			sourceTree = "<group>";
@@ -211,10 +226,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E83191BA192FD5DA0048E4BB /* Scoped2.m in Sources */,
 				E8194BC7190D7A190072EC6F /* Function.m in Sources */,
 				E8194BB6190D79C70072EC6F /* main.m in Sources */,
+				E83191B7192FD5C80048E4BB /* Scoped1.m in Sources */,
 				E8194BCF190D84C40072EC6F /* MABlockForwarding.m in Sources */,
 				E851A3AC19199CD40076A5F1 /* EXTScope.m in Sources */,
+				E83191B4192FCB040048E4BB /* FCFTest.m in Sources */,
 				E86B6545190EF96700F7916E /* PointerFunction.m in Sources */,
 				E8194BC8190D7A190072EC6F /* MethodFunction.m in Sources */,
 				E8194BC6190D7A190072EC6F /* BlockFunction.m in Sources */,
