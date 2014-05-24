@@ -11,5 +11,6 @@
 @interface MethodFunction : Function
 
 + (instancetype)fromTarget:(id)target selector:(SEL)selector;
+- (instancetype)initWithTarget:(id)target selector:(SEL)selector;
 
 @end

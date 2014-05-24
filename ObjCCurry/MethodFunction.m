@@ -22,17 +22,23 @@
 @implementation MethodFunction
 
 + (instancetype)fromTarget:(id)target selector:(SEL)selector {
+    return [[self alloc] initWithTarget:target selector:selector];
+}
+
+- (instancetype)initWithTarget:(id)target selector:(SEL)selector {
     assert(target);
     assert(selector);
     NSString* selName = NSStringFromSelector(selector);
     NSInteger argCount = [[selName componentsSeparatedByString:@":"] count] - 1;
     assert(argCount > 0);
     
-    MethodFunction* f = [[MethodFunction alloc] initWithArgCount:argCount args:nil];
-    f.target = target;
-    f.selector = selector;
+    self = [super initWithArgCount:argCount args:nil];
+    if (self) {
+        self.target = target;
+        self.selector = selector;
+    }
     
-    return f;
+    return self;
 }
 
 - (id)copyWithZone:(NSZone*)zone {
@@ -47,6 +53,7 @@
     
     BOOL useFastLane = NO;
     NSMethodSignature* ms = [_target methodSignatureForSelector:_selector];
+    assert(ms);
     
     if (self.argCount <= 8 && [ms methodReturnType][0] == '@') {
         BOOL onlyIdArgs = YES;
