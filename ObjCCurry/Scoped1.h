@@ -10,6 +10,6 @@
 
 #undef FN_MODULE
 #define FN_MODULE Scoped1
-#import "FCF.h"
+#include "FCF.h"
 
 @function(Cons, id, id);

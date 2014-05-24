@@ -63,7 +63,7 @@
 // MyFuns.h
 #undef FN_MODULE
 #define FN_MODULE MyFuns
-#import "FCF.h"
+#include "FCF.h"
 
 \@function(DoSomething, id, id);
 // ... more function declarations ...
