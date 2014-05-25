@@ -20,6 +20,7 @@
 		E86B6545190EF96700F7916E /* PointerFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = E86B6544190EF96700F7916E /* PointerFunction.m */; };
 		E86B6548190F0A4300F7916E /* NSInvocation+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E86B6547190F0A4300F7916E /* NSInvocation+Extensions.m */; };
 		E86B654B190F0DB000F7916E /* NSInvocation+Function.m in Sources */ = {isa = PBXBuildFile; fileRef = E86B654A190F0DB000F7916E /* NSInvocation+Function.m */; };
+		E8911D2B193155D200E380AF /* NSObject+InfixOperators.m in Sources */ = {isa = PBXBuildFile; fileRef = E8911D2A193155D200E380AF /* NSObject+InfixOperators.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -63,6 +64,8 @@
 		E86B6549190F0DB000F7916E /* NSInvocation+Function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+Function.h"; sourceTree = "<group>"; };
 		E86B654A190F0DB000F7916E /* NSInvocation+Function.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+Function.m"; sourceTree = "<group>"; };
 		E86B656419104D9B00F7916E /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
+		E8911D29193155D200E380AF /* NSObject+InfixOperators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+InfixOperators.h"; sourceTree = "<group>"; };
+		E8911D2A193155D200E380AF /* NSObject+InfixOperators.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+InfixOperators.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,8 @@
 				E8194BC3190D7A190072EC6F /* Function.m */,
 				E8194BC4190D7A190072EC6F /* MethodFunction.h */,
 				E8194BC5190D7A190072EC6F /* MethodFunction.m */,
+				E8911D29193155D200E380AF /* NSObject+InfixOperators.h */,
+				E8911D2A193155D200E380AF /* NSObject+InfixOperators.m */,
 				E86B6543190EF96700F7916E /* PointerFunction.h */,
 				E86B6544190EF96700F7916E /* PointerFunction.m */,
 				E8194BB5190D79C70072EC6F /* main.m */,
@@ -234,6 +239,7 @@
 				E851A3AC19199CD40076A5F1 /* EXTScope.m in Sources */,
 				E83191B4192FCB040048E4BB /* FCFTest.m in Sources */,
 				E86B6545190EF96700F7916E /* PointerFunction.m in Sources */,
+				E8911D2B193155D200E380AF /* NSObject+InfixOperators.m in Sources */,
 				E8194BC8190D7A190072EC6F /* MethodFunction.m in Sources */,
 				E8194BC6190D7A190072EC6F /* BlockFunction.m in Sources */,
 				E86B654B190F0DB000F7916E /* NSInvocation+Function.m in Sources */,

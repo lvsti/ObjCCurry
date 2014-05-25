@@ -10,6 +10,7 @@
 
 #import "metamacros.h"
 #import "MethodFunction.h"
+#import "NSObject+InfixOperators.h"
 
 /**
  * First-class functions (FCFs)
@@ -119,8 +120,11 @@
 #define __FN_LOCAL_ARGCOUNT(fname, ...)
 #define __FN_LOCAL_OBJECT(fname)        extern Function* __FN_LOCAL_OBJNAME(fname);
 #define __FN_BOOTSTRAP(fname) \
-    __attribute__((constructor)) static void metamacro_concat(__FN_QUALIFIED_NAME(fname), _Init) () \
-    { __FN_QUALIFIED_NAME(fname) = __FN_LOCAL_OBJNAME(fname); }
+    __attribute__((constructor)) static void metamacro_concat(__FN_QUALIFIED_NAME(fname), _Init) () { \
+        __FN_QUALIFIED_NAME(fname) = __FN_LOCAL_OBJNAME(fname); \
+        RegisterInfix(@(metamacro_stringify(__FN_QUALIFIED_NAME(fname))), __FN_QUALIFIED_NAME(fname)); \
+    }
+ \
 #define __FN_INSTANCE(fname)            static Function* __FN_QUALIFIED_NAME(fname) = nil;
 
 #endif
