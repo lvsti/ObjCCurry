@@ -10,6 +10,9 @@
 
 @class Function;
 
+#define _(op)   _:(#op) :
+
+
 extern void RegisterInfix(NSString* name, Function* func);
 
 @interface NSObject (InfixOperators)
