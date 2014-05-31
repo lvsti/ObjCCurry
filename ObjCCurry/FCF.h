@@ -15,15 +15,48 @@
 /**
  * First-class functions (FCFs)
  *
- * This header defines the \@function() and \@functionImpl() macros which simplify
- * the declaration and definition of function objects.
+ * This header defines the \@staticFunction(), \@function(), and \@functionImpl() macros
+ * which simplify the declaration and definition of function objects.
  *
- * TO DECLARE:
+ * There are two types of FCFs: file-local (static) and global.
+ * - File-local functions are only visible within the compilation unit in which
+ *   they are declared/defined, and are not meant to be exported.
+ * - Global functions have separate declaration and definition which are supposed
+ *   to go to a header and a source file, respectively. The header then can be included
+ *   in other source files to make the declared functions available.
+ *
+ * CREATING A STATIC FUNCTION
+ *
+ *      \@staticFunction(function_name, function_signature)
+ *      - (retval):(arg1type)arg1 :(arg2type)arg2 ... :(argNtype)argN {
+ *          // implementation
+ *      }
+ *      \@end
+ *
+ *      where
+ *          function_name       - the name of the function
+ *          function_signature  - a comma separated list of argument types,
+ *                                terminated by the return value type
+ *
+ * Example:
+ *      implementing Haskell's flip :: (a -> b -> c) -> b -> a -> c:
+\code
+@staticFunction(Flip, Function*, id, id, id)
+- (id):(Function*)func :(id)a :(id)b {
+    return [func :b :a];
+}
+@end
+\endcode
+ *
+ * CREATING A GLOBAL FUNCTION
+ *
+ * Declaration:
  *      \@function(function_name, function_signature)
  *
  *      where
  *          function_name       - the name of the function
- *          function_signature  - a comma separated list of arguments, terminated by the return value
+ *          function_signature  - a comma separated list of argument types,
+ *                                terminated by the return value type
  *
  * Example:
  *      declaring Haskell's flip :: (a -> b -> c) -> b -> a -> c:
@@ -31,7 +64,7 @@
 @function(Flip, Function*, id, id, id);
 \endcode
  *
- * TO DEFINE:
+ * Definition:
  *      \@functionImpl(function_name)
  *      - (retval):(arg1type)arg1 :(arg2type)arg2 ... :(argNtype)argN {
  *          // implementation
@@ -50,8 +83,11 @@
  *
  * NOTES:
  * - don't put definitions into headers unless you are in for some linker errors
- * - it is obligatory to declare FN_IMPLEMENTATION in the function library
- *   implementation (.m) *before* importing the library header:
+ * - don't put @staticFunction's into headers (it's a definition)
+ * - you'll most probably need to #include (i.e. not #import) FCF.h to allow the
+ *   preprocessor to process it multiple times in different contexts
+ * - when you are building a function library (.h + .m), it is obligatory to
+ *   #define FN_IMPLEMENTATION in the source (.m) *before* importing the library header:
 \code
 // MyFuns.m
 #define FN_IMPLEMENTATION
@@ -124,7 +160,6 @@
         __FN_QUALIFIED_NAME(fname) = __FN_LOCAL_OBJNAME(fname); \
         RegisterInfix(@(metamacro_stringify(__FN_QUALIFIED_NAME(fname))), __FN_QUALIFIED_NAME(fname)); \
     }
- \
 #define __FN_INSTANCE(fname)            static Function* __FN_QUALIFIED_NAME(fname) = nil;
 
 #endif
@@ -144,9 +179,22 @@
 #define functionImpl(fname) interface __FN_LOCAL_CLSNAME(fname) : MethodFunction @end \
     @implementation __FN_LOCAL_CLSNAME(fname) \
     Function* __FN_LOCAL_OBJNAME(fname) = nil; \
-    + (void)load { __FN_LOCAL_OBJNAME(fname) = [self new]; } \
+    static Function* fname = nil; \
+    + (void)load { fname = __FN_LOCAL_OBJNAME(fname) = [self new]; } \
     - (instancetype)init { \
         assert(metamacro_concat(__FN_LOCAL_CLSNAME(fname), _ARGCOUNT) <= 8); \
         self = [super initWithTarget:self selector:NSSelectorFromString([@"::::::::" substringToIndex:metamacro_concat(__FN_LOCAL_CLSNAME(fname), _ARGCOUNT)])]; \
         return self; \
     }
+
+#undef staticFunction
+#define staticFunction(fname, ...) interface __FN_LOCAL_CLSNAME(fname) : MethodFunction @end \
+    @implementation __FN_LOCAL_CLSNAME(fname) \
+    static Function* fname = nil; \
+    + (void)load { fname = [self new]; } \
+    - (instancetype)init { \
+        assert(__FN_ARGCOUNT(__VA_ARGS__) <= 8); \
+        self = [super initWithTarget:self selector:NSSelectorFromString([@"::::::::" substringToIndex: __FN_ARGCOUNT(__VA_ARGS__) ])]; \
+        return self; \
+    }
+
