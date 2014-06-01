@@ -18,7 +18,7 @@
 @interface PointerFunction ()
 
 @property (nonatomic, assign) void* pointer;
-@property (nonatomic, strong) NSInvocation* invocation;
+@property (nonatomic, strong) NSMethodSignature* ms;
 
 @end
 
@@ -34,14 +34,14 @@
     PointerFunction* f = [[PointerFunction alloc] initWithArgCount:argCount
                                                               args:nil];
     f.pointer = ptr;
-    f.invocation = [NSInvocation invocationWithMethodSignature:ms];
+    f.ms = ms;
     return f;
 }
 
 - (id)copyWithZone:(NSZone*)zone {
     PointerFunction* f = [super copyWithZone:zone];
     f.pointer = _pointer;
-    f.invocation = [NSInvocation invocationWithMethodSignature:[_invocation methodSignature]];
+    f.ms = _ms;
     return f;
 }
 
@@ -51,10 +51,10 @@
     
     BOOL useFastLane = NO;
     
-    if (self.argCount <= 8 && [[_invocation methodSignature] methodReturnType][0] == '@') {
+    if (self.argCount <= 8 && [_ms methodReturnType][0] == '@') {
         BOOL onlyIdArgs = YES;
         for (int i = 0; i < self.argCount; ++i) {
-            const char* argType = [[_invocation methodSignature] getArgumentTypeAtIndex:i];
+            const char* argType = [_ms getArgumentTypeAtIndex:i];
             if (argType[0] != '@') {
                 onlyIdArgs = NO;
                 break;
@@ -79,12 +79,13 @@
                 break;
         }
     } else {
-        [_invocation setArgumentsWithArray:self.args
-                           startingAtIndex:0];
+        NSInvocation* inv = [NSInvocation invocationWithMethodSignature:_ms];
+        [inv setArgumentsWithArray:self.args
+                   startingAtIndex:0];
         
-        [_invocation invokeUsingIMP:(IMP)_pointer];
+        [inv invokeUsingIMP:(IMP)_pointer];
         
-        return [_invocation returnedObject];
+        return [inv returnedObject];
     }
     
     assert(NO);
