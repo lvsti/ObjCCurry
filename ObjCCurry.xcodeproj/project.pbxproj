@@ -21,6 +21,8 @@
 		E86B6548190F0A4300F7916E /* NSInvocation+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E86B6547190F0A4300F7916E /* NSInvocation+Extensions.m */; };
 		E86B654B190F0DB000F7916E /* NSInvocation+Function.m in Sources */ = {isa = PBXBuildFile; fileRef = E86B654A190F0DB000F7916E /* NSInvocation+Function.m */; };
 		E8911D2B193155D200E380AF /* NSObject+InfixOperators.m in Sources */ = {isa = PBXBuildFile; fileRef = E8911D2A193155D200E380AF /* NSObject+InfixOperators.m */; };
+		E8911D35193A22B200E380AF /* getcputime.c in Sources */ = {isa = PBXBuildFile; fileRef = E8911D34193A22B200E380AF /* getcputime.c */; };
+		E8911D38193A283500E380AF /* Benchmarks.m in Sources */ = {isa = PBXBuildFile; fileRef = E8911D37193A283500E380AF /* Benchmarks.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -66,6 +68,9 @@
 		E86B656419104D9B00F7916E /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
 		E8911D29193155D200E380AF /* NSObject+InfixOperators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+InfixOperators.h"; sourceTree = "<group>"; };
 		E8911D2A193155D200E380AF /* NSObject+InfixOperators.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+InfixOperators.m"; sourceTree = "<group>"; };
+		E8911D34193A22B200E380AF /* getcputime.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = getcputime.c; sourceTree = "<group>"; };
+		E8911D36193A283500E380AF /* Benchmarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Benchmarks.h; sourceTree = "<group>"; };
+		E8911D37193A283500E380AF /* Benchmarks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Benchmarks.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +137,9 @@
 				E83191B6192FD5C80048E4BB /* Scoped1.m */,
 				E83191B8192FD5DA0048E4BB /* Scoped2.h */,
 				E83191B9192FD5DA0048E4BB /* Scoped2.m */,
+				E8911D34193A22B200E380AF /* getcputime.c */,
+				E8911D36193A283500E380AF /* Benchmarks.h */,
+				E8911D37193A283500E380AF /* Benchmarks.m */,
 			);
 			path = ObjCCurry;
 			sourceTree = "<group>";
@@ -239,6 +247,8 @@
 				E851A3AC19199CD40076A5F1 /* EXTScope.m in Sources */,
 				E83191B4192FCB040048E4BB /* FCFTest.m in Sources */,
 				E86B6545190EF96700F7916E /* PointerFunction.m in Sources */,
+				E8911D38193A283500E380AF /* Benchmarks.m in Sources */,
+				E8911D35193A22B200E380AF /* getcputime.c in Sources */,
 				E8911D2B193155D200E380AF /* NSObject+InfixOperators.m in Sources */,
 				E8194BC8190D7A190072EC6F /* MethodFunction.m in Sources */,
 				E8194BC6190D7A190072EC6F /* BlockFunction.m in Sources */,
