@@ -13,19 +13,29 @@
 static NSMutableDictionary* infixOperators = nil;
 
 void RegisterInfix(NSString* name, Function* func) {
+    assert(name);
+    assert(func);
     assert(!infixOperators[name]);
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        infixOperators = [NSMutableDictionary new];
-    });
-
     [infixOperators setObject:func forKey:name];
+}
+
+Function* InfixForName(NSString* name) {
+    assert(name);
+    Function* func = infixOperators[name];
+    assert(func);
+    return func;
 }
 
 
 @implementation NSObject (InfixOperators)
+
++ (void)load {
+    infixOperators = [NSMutableDictionary new];
+}
+
 - (id)_:(const char*)infixOp :(id)arg2 {
-    Function* func = infixOperators[@(infixOp)];
+    assert(infixOp && *infixOp != 0);
+    Function* func = InfixForName(@(infixOp));
     return [func :self :arg2];
 }
 @end

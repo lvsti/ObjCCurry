@@ -198,3 +198,21 @@
         return self; \
     }
 
+#undef functionAlias
+#ifdef FN_IMPLEMENTATION
+#define functionAlias(falias, fname) class Function; \
+    Function* __FN_LOCAL_OBJNAME(fname); \
+    __attribute__((constructor)) static void metamacro_concat(__FN_QUALIFIED_NAME(fname), metamacro_concat(_Alias, metamacro_concat(__LINE__, _Init))) () { \
+        RegisterInfix(@(metamacro_stringify(falias)), __FN_LOCAL_OBJNAME(fname)); \
+    }
+#else
+#define functionAlias(falias, fname) class Function;
+#endif
+
+#undef staticFunctionAlias
+#define staticFunctionAlias(falias, fname) class Function; \
+    static Function* fname; \
+    __attribute__((constructor)) static void metamacro_concat(fname, metamacro_concat(_Alias, metamacro_concat(__LINE__, _Init))) () { \
+        RegisterInfix(@(metamacro_stringify(falias)), fname); \
+    }
+

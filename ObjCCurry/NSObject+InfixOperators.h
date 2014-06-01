@@ -10,10 +10,11 @@
 
 @class Function;
 
-#define _(op)   _:(#op) :
-
+#define _(op)    _:(#op) :
+#define OP(op)   InfixForName(@(#op))
 
 extern void RegisterInfix(NSString* name, Function* func);
+extern Function* InfixForName(NSString* name);
 
 @interface NSObject (InfixOperators)
 - (id)_:(const char*)infixOp :(id)arg2;
